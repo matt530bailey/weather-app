@@ -13,14 +13,22 @@ function fiveDayForcast(cityName) {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=49df966d9c253f90278d84a948be3d6e`).then(response => {
             return response.json()
         }).then(data => { 
-            var currentWeatherCard = document.createElement('div')
-            var cityDate = document.createElement('h1')
-            var currentTemp = document.createElement('h3')
-            var currentWind = document.createElement('h3')
-            var currentHumid = document.createElement('h3')
+            console.log(data);
+            var currentWeatherCard = document.createElement('div');
+            var cityDate = document.createElement('h1');
+            var currentTemp = document.createElement('h3');
+            var currentWind = document.createElement('h3');
+            var currentHumid = document.createElement('h3');
 
-            cityDate.innerHTML = data.name + (new Date().toLocaleDateString());
+            cityDate.innerHTML = data.name + " " + (new Date().toLocaleDateString());
+            currentTemp.innerHTML = "Currently " + data.main.temp + ' ℉';
+            currentWind.innerHTML = data.wind.speed + ' mph';
+            currentHumid.innerHTML = data.main.humidity + ' %'
+
             currentWeatherCard.appendChild(cityDate);
+            currentWeatherCard.appendChild(currentTemp);
+            currentWeatherCard.appendChild(currentWind);
+            currentWeatherCard.appendChild(currentHumid);
             weatherHome.appendChild(currentWeatherCard);
 
             console.log(data)
