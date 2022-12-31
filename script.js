@@ -41,7 +41,7 @@ function weatherForcast(cityName) {
             var currentWind = document.createElement('h3');
             var currentHumid = document.createElement('h3');
 
-            cityDate.innerHTML = data.name + " " + (new Date().toLocaleDateString()) + " " + currentTempIcon;
+            cityDate.innerHTML = data.name + " " + (new Date().toLocaleDateString());
             currentTemp.innerHTML = "Currently " + data.main.temp + ' ℉';
             currentWind.innerHTML = "Wind is " + data.wind.speed + ' mph';
             currentHumid.innerHTML = "Humidity is " + data.main.humidity + ' %'
@@ -89,6 +89,7 @@ function inputField() {
         if (e.key == "Enter") {
             localStorage.setItem('city', locationReq.value);
             weatherForcast(locationReq.value);
+            locationReq.value = '';
         } else {
             // Will print 'error' while typing in city names 
             // console.log('error');
@@ -100,6 +101,7 @@ function inputField() {
         //console.log(localStorage.getItem('city'));
         // cityToGeo(locationReq.value);
         weatherForcast(locationReq.value);
+        locationReq.value = '';
     })
 }
 
