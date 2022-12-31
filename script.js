@@ -14,11 +14,9 @@ function weatherForcast(cityName) {
             for (var i = 0; i < data; i++) {
                 console.log(data);
                 var futureCast = document.createElement('div');
-                
                 var futureTemp = document.createElement('h3');
                 var futureWind = document.createElement('h3');
                 var futureHumid = document.createElement('h3');
-
                 futureTemp.innerHTML = "Currently " + data.list.main.temp + ' ℉';
                 futureWind.innerHTML = "Wind is " + data.wind.speed + ' mph';
                 futureHumid.innerHTML = "Humidity is " + data.main.humidity + ' %';
@@ -33,15 +31,17 @@ function weatherForcast(cityName) {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=49df966d9c253f90278d84a948be3d6e`).then(response => {
             return response.json()
         }).then(data => { 
+            console.log(data)
+
             var currentWeatherCard = document.createElement('div');
             var cityDate = document.createElement('h1');
-            var currentTempIcon = document.createElement('a', 'alt="weather icon"');
+            var currentTempIcon = document.createElement('img');
+                currentTempIcon.src = 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png';
             var currentTemp = document.createElement('h3');
             var currentWind = document.createElement('h3');
             var currentHumid = document.createElement('h3');
-                
-            cityDate.innerHTML = data.name + " " + (new Date().toLocaleDateString());
-            currentTempIcon.innerHTML = 'http://openweathermap.org/img/w/' + data.weather[0].icon + '@2x.png';
+
+            cityDate.innerHTML = data.name + " " + (new Date().toLocaleDateString()) + " " + currentTempIcon;
             currentTemp.innerHTML = "Currently " + data.main.temp + ' ℉';
             currentWind.innerHTML = "Wind is " + data.wind.speed + ' mph';
             currentHumid.innerHTML = "Humidity is " + data.main.humidity + ' %'
@@ -52,8 +52,6 @@ function weatherForcast(cityName) {
             currentWeatherCard.appendChild(currentWind);
             currentWeatherCard.appendChild(currentHumid);
             currentWeather.appendChild(currentWeatherCard);
-
-            console.log(data)
         })
             
 }
