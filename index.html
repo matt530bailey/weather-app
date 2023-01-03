@@ -11,13 +11,19 @@
 <body>
     <section>
         <header>
-            <input id="citySearch" placeholder="City Name">
-            <button id="selectBtn">Search</button>
+            <form id="weatherSearch">
+                <input 
+                name="citySearch" id="citySearch" placeholder="City Name"/>
+                <br/>
+                <input name="state" placeholder="State"/>
+                <br/>
+                <button type="submit">Search</button>
+            </form>
             <!-- want to have current location search to fill here --DONE-- -->
         </header>
     </section>
     <section>
-        <aside>
+        <aside id="btnHome">
             <!-- previous searchers/ local storage -->
         </aside>
     </section>
