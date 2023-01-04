@@ -5,7 +5,6 @@ const cityFieldEl = document.querySelector('#citySearch');
 const searchBtn = document.querySelector('#selectBtn');
 const btnHome = document.querySelector('#btnHome');
 
-
 function weatherForcast(location) {
         fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=imperial&appid=49df966d9c253f90278d84a948be3d6e`).then(response => {
             return response.json()
@@ -15,46 +14,22 @@ function weatherForcast(location) {
             const filteredItems = data.list.filter((val, index) =>
                 val.dt_txt.indexOf("12:00:00") >= 0
             );
+            console.log(filteredItems);
 
             filteredItems.forEach(item => {
                 const date = new Date(item.dt_txt);
                 var futureCast = document.createElement('div');
                 futureCast.innerHTML = `
                     <h3>${date.toLocaleDateString("en-US", { dateStyle: 'full' })}</h3>
-                    <p>Temp: ${item.main.temp}</p>
-                    <p>Feels Like: ${item.main.feels_like}</p>
+                    <p>Temp: ${item.main.temp}  ℉</p>
+                    <p>Wind: ${item.wind.speed} mph</p>
+                    <p>Humidity: ${item.main.humidity} %</p>
                 `;
-                futureCast.className = "weatherDay";
-
-                /*
-                #fiveDayCast .weatherDay {
-                    border: 1px solid #000; 
-                    borderRadius: 4px; 
-                    margin-right: 10px; 
-                    width: calc(33% - 10px);
-                }
-                */
+                // futureCast.className = "weatherDay";
 
                 fiveDayWeather.appendChild(futureCast);
             });
             
-            // not creating divs as thought
-            for (var i = 0; i < data.list; i++) {
-                console.log(data);
-                var futureCast = document.createElement('div');
-                var futureTemp = document.createElement('h3');
-                var futureWind = document.createElement('h3');
-                var futureHumid = document.createElement('h3');
-                futureTemp.innerHTML = "Currently " + data.list.main.temp + ' ℉';
-                futureWind.innerHTML = "Wind is " + data.wind.speed + ' mph';
-                futureHumid.innerHTML = "Humidity is " + data.main.humidity + ' %';
-
-                futureCast.appendChild(futureTemp);
-                futureCast.appendChild(futureWind);
-                futureCast.appendChild(futureHumid);
-
-                fiveDayWeather.appendChild(futureCast);
-            }
         })
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=49df966d9c253f90278d84a948be3d6e`).then(response => {
             return response.json()
@@ -119,14 +94,10 @@ function weatherForcast(location) {
         const formData = new FormData(formEl);
         let searchQuery = formData.get("citySearch");
         if (searchQuery.length < 3) {
-            //TODO: Change this!
-            alert("stupid");
+            alert("Please Enter Valid City");
             return;
         }
-        const stateValue = formData.get("state");
-        if (stateValue.length > 0) {
-            searchQuery += ", " + stateValue;
-        }
+        
         let previousSearches = JSON.parse(localStorage.getItem('city')) ?? [];
         previousSearches.push(searchQuery);
         localStorage.setItem('city', JSON.stringify(previousSearches));
@@ -136,34 +107,32 @@ function weatherForcast(location) {
 
     JSON.parse(localStorage.getItem('city').toLowerCase()).reverse().filter((element, i, cityArray) => {
         return cityArray.indexOf(element) == i
-    }).forEach((historyItem, index, allItems) => {
+    }).forEach((citySearchItem, index, allItems) => {
         if (index < 5) {
             var locationBtn = document.createElement('button')
-            locationBtn.innerHTML = historyItem;
+            locationBtn.innerHTML = citySearchItem;
             btnHome.appendChild(locationBtn);
-            // build your DIV here
-            // append DIV to some container in the HTML doc
         }
     })
 
 }());
-
-var reallyLongArrayName = [1,2 ,3, 4, 1, 2, 3, 4];
-// [2, 4, 6, 8]
-// reallyLongArrayName.indexOf(2) = 1
-function tony(){
+// // // Example code from tutor session on filter/map/indexOf
+// var reallyLongArrayName = [1,2 ,3, 4, 1, 2, 3, 4];
+// // [2, 4, 6, 8]
+// // reallyLongArrayName.indexOf(2) = 1
+// function tony(){
     
-return reallyLongArrayName.filter((element, i, arr) => {
-    return arr.indexOf(element) == i
-})
-
-    // return reallyLongArrayName.map((number, i, arr) => {
-    //     console.log(arr)
-    //     return number*2
-    // })
-}
-
-console.log(tony())
-// forEach((number, i, arr) => {
-// newArr.push(number * 2)
+// return reallyLongArrayName.filter((element, i, arr) => {
+//     return arr.indexOf(element) == i
 // })
+
+//     // return reallyLongArrayName.map((number, i, arr) => {
+//     //     console.log(arr)
+//     //     return number*2
+//     // })
+// }
+
+// console.log(tony())
+// // forEach((number, i, arr) => {
+// // newArr.push(number * 2)
+// // })
