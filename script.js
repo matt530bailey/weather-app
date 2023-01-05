@@ -9,6 +9,7 @@ function weatherForcast(location) {
         fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=imperial&appid=49df966d9c253f90278d84a948be3d6e`).then(response => {
             return response.json()
         }).then(data => {
+            console.log(data);
             fiveDayWeather.innerHTML = "";
 
             const filteredItems = data.list.filter((val, index) =>
@@ -19,6 +20,10 @@ function weatherForcast(location) {
             filteredItems.forEach(item => {
                 const date = new Date(item.dt_txt);
                 var futureCast = document.createElement('div');
+                var futureCastIcon = new Image();
+                futureCastIcon.src = 'http://openweathermap.org/img/w/' + item.weather[0].icon + '.png';
+                fiveDayWeather.appendChild(futureCastIcon)
+                console.log(futureCastIcon);
                 futureCast.innerHTML = `
                     <h3>${date.toLocaleDateString("en-US", { dateStyle: 'full' })}</h3>
                     <p>Temp: ${item.main.temp}  ℉</p>
@@ -112,6 +117,9 @@ function weatherForcast(location) {
             var locationBtn = document.createElement('button')
             locationBtn.innerHTML = citySearchItem;
             btnHome.appendChild(locationBtn);
+            locationBtn.addEventListener('click', () => {
+               
+            });
         }
     })
 
